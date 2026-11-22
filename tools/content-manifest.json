@@ -2,7 +2,7 @@
   "$comment": "Fuente de verdad del catálogo de Lumora. Ejecuta tools/build_catalog.py para regenerar docs/catalog.json y el catálogo empaquetado en la app.",
   "version": 2,
   "updatedAt": "2026-11-22",
-  "baseUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone",
+  "baseUrl": "https://raw.githubusercontent.com/karmaoriginal/fluffy-rotary-phone/main/docs",
   "categories": [
     { "id": "anime", "name": "Anime", "accent": "#FF6FA8" },
     { "id": "paisajes", "name": "Paisajes", "accent": "#4ECCA3" },
