@@ -17,6 +17,16 @@ class LiveWallpaperConfig(context: Context) {
         get() = prefs.getString(KEY_VIDEO, null)
         set(value) = prefs.edit().putString(KEY_VIDEO, value).apply()
 
+    /** Static poster frame drawn while the video has not produced a frame yet (or fails). */
+    var posterPath: String?
+        get() = prefs.getString(KEY_POSTER, null)
+        set(value) = prefs.edit().putString(KEY_POSTER, value).apply()
+
+    /** Last playback error reported by the engine, surfaced in Ajustes for support. */
+    var lastError: String?
+        get() = prefs.getString(KEY_LAST_ERROR, null)
+        set(value) = prefs.edit().putString(KEY_LAST_ERROR, value).apply()
+
     var muted: Boolean
         get() = prefs.getBoolean(KEY_MUTED, true)
         set(value) = prefs.edit().putBoolean(KEY_MUTED, value).apply()
@@ -44,6 +54,8 @@ class LiveWallpaperConfig(context: Context) {
 
     private companion object {
         const val KEY_VIDEO = "video_path"
+        const val KEY_POSTER = "poster_path"
+        const val KEY_LAST_ERROR = "last_error"
         const val KEY_MUTED = "muted"
         const val KEY_FPS = "fps_limit"
         const val KEY_LAST_APPLIED = "last_applied_at"

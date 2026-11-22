@@ -26,7 +26,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +37,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import app.lumora.AppContainer
 import app.lumora.BuildConfig
+import app.lumora.data.wallpaper.LiveWallpaperDiagnostics
 import app.lumora.designsystem.icons.LumoraIcons
 import app.lumora.model.EnhanceTarget
 import app.lumora.model.FrameRateLimit
@@ -53,6 +56,9 @@ fun SettingsScreen(container: AppContainer) {
     val cacheBytes by viewModel.cacheBytes.collectAsStateWithLifecycle()
     val message by viewModel.message.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    var liveDiagnostics by remember { mutableStateOf<LiveWallpaperDiagnostics?>(null) }
+
+    LaunchedEffect(Unit) { liveDiagnostics = container.wallpaperApplier.liveDiagnostics() }
 
     LaunchedEffect(message) {
         val text = message
@@ -140,6 +146,37 @@ fun SettingsScreen(container: AppContainer) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
                 )
+                liveDiagnostics?.let { info ->
+                    KeyValueRow(
+                        label = "Fondo del inicio",
+                        value = info.activeWallpaper ?: "Estático (ningún fondo animado)",
+                    )
+                    KeyValueRow(
+                        label = "Video asignado",
+                        value = info.videoName ?: "Sin asignar",
+                    )
+                    KeyValueRow(
+                        label = "Archivo del video",
+                        value = if (info.videoExists) {
+                            "Disponible · ${Formatters.bytes(info.videoBytes)}"
+                        } else {
+                            "No encontrado"
+                        },
+                    )
+                    KeyValueRow(
+                        label = "Primer fotograma",
+                        value = if (info.posterAvailable) "Listo" else "No disponible",
+                    )
+                    val error = info.lastError
+                    if (error != null) {
+                        Text(
+                            text = "Último error de reproducción: $error",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                        )
+                    }
+                }
             }
 
             SettingsSection(title = "Mejora de video") {

@@ -48,6 +48,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,6 +83,7 @@ import app.lumora.util.Formatters
 import app.lumora.wallpaper.LiveWallpaperController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -112,6 +114,7 @@ fun SharedTransitionScope.PreviewScreen(
     var showMenu by remember { mutableStateOf(false) }
     var showRename by remember { mutableStateOf(false) }
     var showDelete by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(state.deleted) {
         if (state.deleted) onBack()
@@ -408,18 +411,38 @@ fun SharedTransitionScope.PreviewScreen(
                             onFpsChange = viewModel::setFpsLimit,
                             onApplyLive = {
                                 val path = state.mediaPath
-                                if (path != null) {
-                                    val intent = liveController.prepareAndBuildIntent(
-                                        video = File(path),
-                                        muted = state.muted,
-                                        fpsLimit = state.fpsLimit,
+                                if (path == null) {
+                                    viewModel.notify(
+                                        "Descarga el fondo animado antes de aplicarlo",
                                     )
-                                    runCatching { context.startActivity(intent) }
-                                        .onFailure {
-                                            runCatching {
+                                } else {
+                                    scope.launch {
+                                        liveController.prepareAndBuildIntent(
+                                            video = File(path),
+                                            muted = state.muted,
+                                            fpsLimit = state.fpsLimit,
+                                        ).onSuccess { intent ->
+                                            val opened = runCatching {
+                                                context.startActivity(intent)
+                                            }.isSuccess || runCatching {
                                                 context.startActivity(liveController.chooserIntent())
+                                            }.isSuccess
+                                            if (opened) {
+                                                viewModel.notify(
+                                                    "Elige «Lumora» en el selector y pulsa " +
+                                                        "«Establecer fondo»",
+                                                )
+                                            } else {
+                                                viewModel.notify(
+                                                    "No se pudo abrir el selector de fondos animados",
+                                                )
                                             }
+                                        }.onFailure { error ->
+                                            viewModel.notify(
+                                                error.message ?: "No se pudo preparar el fondo animado",
+                                            )
                                         }
+                                    }
                                 }
                             },
                             onEnhance = viewModel::startEnhancement,

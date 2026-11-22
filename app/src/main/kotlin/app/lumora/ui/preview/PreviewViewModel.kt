@@ -190,7 +190,15 @@ class PreviewViewModel(
                 it.copy(
                     applying = false,
                     message = result.fold(
-                        onSuccess = { "Fondo aplicado correctamente" },
+                        onSuccess = {
+                            val live = container.wallpaperApplier.activeLiveWallpaperName()
+                            if (live != null) {
+                                "Fondo aplicado. Ojo: «$live» sigue como fondo animado del inicio; " +
+                                    "quítalo para ver este fondo ahí (ya se ve en la pantalla de bloqueo)"
+                            } else {
+                                "Fondo aplicado correctamente"
+                            }
+                        },
                         onFailure = { error -> error.message ?: "No se pudo aplicar el fondo" },
                     ),
                 )
@@ -232,6 +240,8 @@ class PreviewViewModel(
     }
 
     fun consumeMessage() = _state.update { it.copy(message = null) }
+
+    fun notify(text: String) = _state.update { it.copy(message = text) }
 
     companion object {
         const val LOCAL = "local"

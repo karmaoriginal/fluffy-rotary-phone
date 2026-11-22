@@ -60,14 +60,14 @@ object ThumbnailFactory {
         }
     }
 
-    fun videoFrame(source: File): Bitmap? {
+    fun videoFrame(source: File, maxDim: Int = MAX_THUMB_DIM): Bitmap? {
         val retriever = MediaMetadataRetriever()
         return try {
             retriever.setDataSource(source.absolutePath)
             val frame = retriever.getFrameAtTime(700_000L, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
                 ?: retriever.getFrameAtTime(0L, MediaMetadataRetriever.OPTION_CLOSEST_SYNC)
                 ?: return null
-            val scale = MAX_THUMB_DIM.toFloat() / maxOf(frame.width, frame.height)
+            val scale = maxDim.toFloat() / maxOf(frame.width, frame.height)
             if (scale < 1f) {
                 val width = (frame.width * scale).toInt().coerceAtLeast(1)
                 val height = (frame.height * scale).toInt().coerceAtLeast(1)

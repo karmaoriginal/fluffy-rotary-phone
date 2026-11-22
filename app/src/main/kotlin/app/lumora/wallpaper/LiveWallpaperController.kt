@@ -16,11 +16,18 @@ class LiveWallpaperController(
     private val component: ComponentName
         get() = ComponentName(context, LumoraWallpaperService::class.java)
 
-    /** Stores the video and returns the intent that opens the system live wallpaper preview. */
-    fun prepareAndBuildIntent(video: File, muted: Boolean, fpsLimit: Int): Intent {
-        applier.prepareLiveWallpaper(video, muted, fpsLimit)
-        return applier.liveWallpaperIntent(component)
-    }
+    /**
+     * Stores the video (+ poster frame) and returns the intent that opens the system live
+     * wallpaper preview. Fails when the video file is gone so the UI can explain why.
+     */
+    suspend fun prepareAndBuildIntent(
+        video: File,
+        muted: Boolean,
+        fpsLimit: Int,
+    ): Result<Intent> = applier.prepareLiveWallpaper(video, muted, fpsLimit)
+        .map { applier.liveWallpaperIntent(component) }
+
+    fun diagnostics() = applier.liveDiagnostics()
 
     fun chooserIntent(): Intent =
         Intent(WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER).apply {
