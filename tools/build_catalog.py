@@ -77,7 +77,7 @@ def main() -> None:
             "fullUrl": url(full),
             "license": LICENSE,
             "licenseUrl": LICENSE_URL,
-            "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+            "sourceUrl": "https://github.com/karmaoriginal/lumora/tree/main/docs/content",
             "addedAt": entry.get("addedAt", ""),
             "downloads": entry.get("downloads", 0),
             "featured": entry.get("featured", False),

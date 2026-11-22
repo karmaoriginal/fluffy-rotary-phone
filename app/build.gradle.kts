@@ -47,12 +47,12 @@ android {
         buildConfigField(
             "String",
             "CATALOG_URL",
-            "\"https://karmaoriginal.github.io/fluffy-rotary-phone/catalog.json\"",
+            "\"https://karmaoriginal.github.io/lumora/catalog.json\"",
         )
         buildConfigField(
             "String",
             "CATALOG_FALLBACK_URL",
-            "\"https://raw.githubusercontent.com/karmaoriginal/fluffy-rotary-phone/main/docs/catalog.json\"",
+            "\"https://raw.githubusercontent.com/karmaoriginal/lumora/main/docs/catalog.json\"",
         )
         // Optional FFmpeg backend (ffmpeg-kit). Disabled by default to keep the APK tiny,
         // see docs/OPTIONAL_FFMPEG.md. The app always ships the Media3-based enhancer.
