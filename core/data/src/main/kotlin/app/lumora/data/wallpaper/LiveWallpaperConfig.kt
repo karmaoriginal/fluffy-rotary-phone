@@ -30,6 +30,14 @@ class LiveWallpaperConfig(context: Context) {
         get() = prefs.getLong(KEY_LAST_APPLIED, 0L)
         set(value) = prefs.edit().putLong(KEY_LAST_APPLIED, value).apply()
 
+    fun registerListener(listener: android.content.SharedPreferences.OnSharedPreferenceChangeListener) {
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    fun unregisterListener(listener: android.content.SharedPreferences.OnSharedPreferenceChangeListener) {
+        prefs.unregisterOnSharedPreferenceChangeListener(listener)
+    }
+
     fun clear() {
         prefs.edit().clear().apply()
     }

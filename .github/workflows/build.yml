@@ -86,8 +86,8 @@ jobs:
             echo '```'
             if [ -f build.log ]; then
               grep -nE '^e: |FAILURE:|What went wrong|Caused by:|error:|Execution failed|> Task .* FAILED|Could not (resolve|download|find|create)|Unresolved reference|A problem occurred' build.log | tail -80 || true
-              echo "----- last 80 log lines -----"
-              tail -80 build.log
+              echo "----- last 45 non-stack log lines -----"
+              grep -vE '^\s+at |^\t+at |^\.\.\. [0-9]+ more' build.log | tail -45
             else
               echo "build.log was not generated (failure before the Gradle invocation)."
             fi

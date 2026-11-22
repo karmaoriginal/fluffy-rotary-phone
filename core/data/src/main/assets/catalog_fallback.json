@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-22",
+  "categories": [
+    { "id": "anime", "name": "Anime", "accent": "#FF6FA8" },
+    { "id": "paisajes", "name": "Paisajes", "accent": "#4ECCA3" },
+    { "id": "agua", "name": "Agua", "accent": "#3FA9F5" },
+    { "id": "colores", "name": "Colores", "accent": "#FFB347" },
+    { "id": "minimalista", "name": "Minimalista", "accent": "#B8B8C8" },
+    { "id": "espacio", "name": "Espacio", "accent": "#7B5CFF" },
+    { "id": "naturaleza", "name": "Naturaleza", "accent": "#63D471" },
+    { "id": "abstracto", "name": "Abstracto", "accent": "#FF5C9D" },
+    { "id": "oscuro", "name": "Oscuro / AMOLED", "accent": "#8A8A9A" }
+  ],
+  "items": []
+}
