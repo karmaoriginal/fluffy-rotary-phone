@@ -17,3 +17,6 @@ build/
 build.log
 *.hprof
 .kotlin/
+
+# raw generation sources (not shipped)
+docs/raw/

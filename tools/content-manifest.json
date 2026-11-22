@@ -1,0 +1,167 @@
+{
+  "$comment": "Fuente de verdad del catálogo de Lumora. Ejecuta tools/build_catalog.py para regenerar docs/catalog.json y el catálogo empaquetado en la app.",
+  "version": 2,
+  "updatedAt": "2026-11-22",
+  "baseUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone",
+  "categories": [
+    { "id": "anime", "name": "Anime", "accent": "#FF6FA8" },
+    { "id": "paisajes", "name": "Paisajes", "accent": "#4ECCA3" },
+    { "id": "agua", "name": "Agua", "accent": "#3FA9F5" },
+    { "id": "colores", "name": "Colores", "accent": "#FFB347" },
+    { "id": "minimalista", "name": "Minimalista", "accent": "#B8B8C8" },
+    { "id": "espacio", "name": "Espacio", "accent": "#7B5CFF" },
+    { "id": "naturaleza", "name": "Naturaleza", "accent": "#63D471" },
+    { "id": "abstracto", "name": "Abstracto", "accent": "#FF5C9D" },
+    { "id": "oscuro", "name": "Oscuro / AMOLED", "accent": "#8A8A9A" }
+  ],
+  "items": [
+    {
+      "id": "art-aurora-peaks",
+      "file": "aurora-peaks",
+      "title": "Cumbre Aurora",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["paisajes", "colores"],
+      "tags": ["montaña", "amanecer", "niebla", "degradado", "teal"],
+      "addedAt": "2026-11-20",
+      "downloads": 1284,
+      "featured": true
+    },
+    {
+      "id": "art-emerald-swell",
+      "file": "emerald-swell",
+      "title": "Ola Esmeralda",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["agua", "naturaleza"],
+      "tags": ["océano", "ola", "espuma", "turquesa"],
+      "addedAt": "2026-11-19",
+      "downloads": 963
+    },
+    {
+      "id": "art-neon-mesh",
+      "file": "neon-mesh",
+      "title": "Malla Neón",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["abstracto", "colores"],
+      "tags": ["neón", "líneas", "violeta", "magenta"],
+      "addedAt": "2026-11-20",
+      "downloads": 1477,
+      "featured": true
+    },
+    {
+      "id": "art-mono-dunes",
+      "file": "mono-dunes",
+      "title": "Dunas Minimal",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["minimalista", "paisajes"],
+      "tags": ["desierto", "beige", "calma", "crema"],
+      "addedAt": "2026-11-18",
+      "downloads": 742
+    },
+    {
+      "id": "art-violet-nebula",
+      "file": "violet-nebula",
+      "title": "Nebulosa Violeta",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["espacio", "oscuro"],
+      "tags": ["estrellas", "galaxia", "cosmos", "indigo"],
+      "addedAt": "2026-11-17",
+      "downloads": 1663
+    },
+    {
+      "id": "art-foggy-pines",
+      "file": "foggy-pines",
+      "title": "Pinos en Niebla",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["naturaleza", "paisajes"],
+      "tags": ["bosque", "niebla", "verde", "amanecer"],
+      "addedAt": "2026-11-16",
+      "downloads": 688
+    },
+    {
+      "id": "art-glass-ribbons",
+      "file": "glass-ribbons",
+      "title": "Cintas de Cristal",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["abstracto", "colores"],
+      "tags": ["3d", "iridiscente", "vidrio", "aqua"],
+      "addedAt": "2026-11-16",
+      "downloads": 812
+    },
+    {
+      "id": "art-amoled-embers",
+      "file": "amoled-embers",
+      "title": "Brasas AMOLED",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["oscuro", "minimalista"],
+      "tags": ["negro", "amoled", "fuego", "batería"],
+      "addedAt": "2026-11-15",
+      "downloads": 1902,
+      "featured": true
+    },
+    {
+      "id": "art-sakura-rooftop",
+      "file": "sakura-rooftop",
+      "title": "Azotea Sakura",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": ["anime", "paisajes"],
+      "tags": ["anime", "sakura", "atardecer", "ciudad"],
+      "addedAt": "2026-11-14",
+      "downloads": 2245,
+      "featured": true
+    },
+    {
+      "id": "live-neon-drift",
+      "file": "neon-mesh",
+      "title": "Malla Neón viva",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": ["abstracto", "colores"],
+      "tags": ["animado", "neón", "bucle", "violeta"],
+      "addedAt": "2026-11-21",
+      "downloads": 934,
+      "featured": true
+    },
+    {
+      "id": "live-glass-flow",
+      "file": "glass-ribbons",
+      "title": "Cristal en movimiento",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": ["abstracto", "oscuro"],
+      "tags": ["animado", "3d", "iridiscente", "bucle"],
+      "addedAt": "2026-11-21",
+      "downloads": 651
+    },
+    {
+      "id": "live-ocean-breath",
+      "file": "emerald-swell",
+      "title": "Ola que respira",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": ["agua", "naturaleza"],
+      "tags": ["animado", "océano", "turquesa", "bucle"],
+      "addedAt": "2026-11-20",
+      "downloads": 1103
+    },
+    {
+      "id": "live-dawn-ridge",
+      "file": "aurora-peaks",
+      "title": "Amanecer en la cresta",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": ["paisajes", "colores"],
+      "tags": ["animado", "montaña", "amanecer", "bucle"],
+      "addedAt": "2026-11-19",
+      "downloads": 874
+    }
+  ]
+}

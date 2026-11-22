@@ -10,6 +10,8 @@ import app.lumora.data.enhance.VideoEnhancer
 import app.lumora.data.library.LibraryRepository
 import app.lumora.data.storage.FileStore
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import java.io.File
@@ -51,7 +53,8 @@ class EnhanceWorker(
 
         progressStore.start(wallpaperId)
         val channel = Channel<Float>(Channel.CONFLATED)
-        val reporter = launch {
+        val reporterScope = CoroutineScope(coroutineContext + SupervisorJob())
+        val reporter = reporterScope.launch {
             for (fraction in channel) {
                 runCatching {
                     setProgress(
@@ -93,6 +96,7 @@ class EnhanceWorker(
         } finally {
             channel.close()
             reporter.cancel()
+            reporterScope.cancel()
         }
     }
 

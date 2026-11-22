@@ -1,16 +1,431 @@
 {
-  "version": 1,
+  "version": 2,
   "updatedAt": "2026-11-22",
   "categories": [
-    { "id": "anime", "name": "Anime", "accent": "#FF6FA8" },
-    { "id": "paisajes", "name": "Paisajes", "accent": "#4ECCA3" },
-    { "id": "agua", "name": "Agua", "accent": "#3FA9F5" },
-    { "id": "colores", "name": "Colores", "accent": "#FFB347" },
-    { "id": "minimalista", "name": "Minimalista", "accent": "#B8B8C8" },
-    { "id": "espacio", "name": "Espacio", "accent": "#7B5CFF" },
-    { "id": "naturaleza", "name": "Naturaleza", "accent": "#63D471" },
-    { "id": "abstracto", "name": "Abstracto", "accent": "#FF5C9D" },
-    { "id": "oscuro", "name": "Oscuro / AMOLED", "accent": "#8A8A9A" }
+    {
+      "id": "anime",
+      "name": "Anime",
+      "accent": "#FF6FA8"
+    },
+    {
+      "id": "paisajes",
+      "name": "Paisajes",
+      "accent": "#4ECCA3"
+    },
+    {
+      "id": "agua",
+      "name": "Agua",
+      "accent": "#3FA9F5"
+    },
+    {
+      "id": "colores",
+      "name": "Colores",
+      "accent": "#FFB347"
+    },
+    {
+      "id": "minimalista",
+      "name": "Minimalista",
+      "accent": "#B8B8C8"
+    },
+    {
+      "id": "espacio",
+      "name": "Espacio",
+      "accent": "#7B5CFF"
+    },
+    {
+      "id": "naturaleza",
+      "name": "Naturaleza",
+      "accent": "#63D471"
+    },
+    {
+      "id": "abstracto",
+      "name": "Abstracto",
+      "accent": "#FF5C9D"
+    },
+    {
+      "id": "oscuro",
+      "name": "Oscuro / AMOLED",
+      "accent": "#8A8A9A"
+    }
   ],
-  "items": []
+  "items": [
+    {
+      "id": "art-aurora-peaks",
+      "title": "Cumbre Aurora",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "paisajes",
+        "colores"
+      ],
+      "tags": [
+        "montaña",
+        "amanecer",
+        "niebla",
+        "degradado",
+        "teal"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 155542,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/aurora-peaks.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/aurora-peaks.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/aurora-peaks.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-20",
+      "downloads": 1284,
+      "featured": true
+    },
+    {
+      "id": "art-emerald-swell",
+      "title": "Ola Esmeralda",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "agua",
+        "naturaleza"
+      ],
+      "tags": [
+        "océano",
+        "ola",
+        "espuma",
+        "turquesa"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 240268,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/emerald-swell.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/emerald-swell.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/emerald-swell.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-19",
+      "downloads": 963,
+      "featured": false
+    },
+    {
+      "id": "art-neon-mesh",
+      "title": "Malla Neón",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "abstracto",
+        "colores"
+      ],
+      "tags": [
+        "neón",
+        "líneas",
+        "violeta",
+        "magenta"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 142946,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/neon-mesh.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/neon-mesh.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/neon-mesh.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-20",
+      "downloads": 1477,
+      "featured": true
+    },
+    {
+      "id": "art-mono-dunes",
+      "title": "Dunas Minimal",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "minimalista",
+        "paisajes"
+      ],
+      "tags": [
+        "desierto",
+        "beige",
+        "calma",
+        "crema"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 34072,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/mono-dunes.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/mono-dunes.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/mono-dunes.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-18",
+      "downloads": 742,
+      "featured": false
+    },
+    {
+      "id": "art-violet-nebula",
+      "title": "Nebulosa Violeta",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "espacio",
+        "oscuro"
+      ],
+      "tags": [
+        "estrellas",
+        "galaxia",
+        "cosmos",
+        "indigo"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 202830,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/violet-nebula.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/violet-nebula.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/violet-nebula.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-17",
+      "downloads": 1663,
+      "featured": false
+    },
+    {
+      "id": "art-foggy-pines",
+      "title": "Pinos en Niebla",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "naturaleza",
+        "paisajes"
+      ],
+      "tags": [
+        "bosque",
+        "niebla",
+        "verde",
+        "amanecer"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 154420,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/foggy-pines.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/foggy-pines.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/foggy-pines.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-16",
+      "downloads": 688,
+      "featured": false
+    },
+    {
+      "id": "art-glass-ribbons",
+      "title": "Cintas de Cristal",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "abstracto",
+        "colores"
+      ],
+      "tags": [
+        "3d",
+        "iridiscente",
+        "vidrio",
+        "aqua"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 128800,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/glass-ribbons.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/glass-ribbons.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/glass-ribbons.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-16",
+      "downloads": 812,
+      "featured": false
+    },
+    {
+      "id": "art-amoled-embers",
+      "title": "Brasas AMOLED",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "oscuro",
+        "minimalista"
+      ],
+      "tags": [
+        "negro",
+        "amoled",
+        "fuego",
+        "batería"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 7878,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/amoled-embers.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/amoled-embers.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/amoled-embers.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-15",
+      "downloads": 1902,
+      "featured": true
+    },
+    {
+      "id": "art-sakura-rooftop",
+      "title": "Azotea Sakura",
+      "author": "Lumora Studio",
+      "kind": "image",
+      "categories": [
+        "anime",
+        "paisajes"
+      ],
+      "tags": [
+        "anime",
+        "sakura",
+        "atardecer",
+        "ciudad"
+      ],
+      "width": 941,
+      "height": 1672,
+      "durationMs": 0,
+      "sizeBytes": 205328,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/sakura-rooftop.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/sakura-rooftop.webp",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/full/sakura-rooftop.webp",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-14",
+      "downloads": 2245,
+      "featured": true
+    },
+    {
+      "id": "live-neon-drift",
+      "title": "Malla Neón viva",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": [
+        "abstracto",
+        "colores"
+      ],
+      "tags": [
+        "animado",
+        "neón",
+        "bucle",
+        "violeta"
+      ],
+      "width": 720,
+      "height": 1280,
+      "durationMs": 8000,
+      "sizeBytes": 610554,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/neon-mesh.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/previews/neon-mesh-preview.mp4",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/videos/neon-mesh.mp4",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-21",
+      "downloads": 934,
+      "featured": true
+    },
+    {
+      "id": "live-glass-flow",
+      "title": "Cristal en movimiento",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": [
+        "abstracto",
+        "oscuro"
+      ],
+      "tags": [
+        "animado",
+        "3d",
+        "iridiscente",
+        "bucle"
+      ],
+      "width": 720,
+      "height": 1280,
+      "durationMs": 8000,
+      "sizeBytes": 528394,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/glass-ribbons.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/previews/glass-ribbons-preview.mp4",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/videos/glass-ribbons.mp4",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-21",
+      "downloads": 651,
+      "featured": false
+    },
+    {
+      "id": "live-ocean-breath",
+      "title": "Ola que respira",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": [
+        "agua",
+        "naturaleza"
+      ],
+      "tags": [
+        "animado",
+        "océano",
+        "turquesa",
+        "bucle"
+      ],
+      "width": 720,
+      "height": 1280,
+      "durationMs": 8000,
+      "sizeBytes": 732994,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/emerald-swell.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/previews/emerald-swell-preview.mp4",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/videos/emerald-swell.mp4",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-20",
+      "downloads": 1103,
+      "featured": false
+    },
+    {
+      "id": "live-dawn-ridge",
+      "title": "Amanecer en la cresta",
+      "author": "Lumora Studio",
+      "kind": "video",
+      "categories": [
+        "paisajes",
+        "colores"
+      ],
+      "tags": [
+        "animado",
+        "montaña",
+        "amanecer",
+        "bucle"
+      ],
+      "width": 720,
+      "height": 1280,
+      "durationMs": 8000,
+      "sizeBytes": 548338,
+      "thumbUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/thumbs/aurora-peaks.webp",
+      "previewUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/previews/aurora-peaks-preview.mp4",
+      "fullUrl": "https://karmaoriginal.github.io/fluffy-rotary-phone/content/videos/aurora-peaks.mp4",
+      "license": "CC0-1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://github.com/karmaoriginal/fluffy-rotary-phone/tree/main/docs/content",
+      "addedAt": "2026-11-19",
+      "downloads": 874,
+      "featured": false
+    }
+  ]
 }
