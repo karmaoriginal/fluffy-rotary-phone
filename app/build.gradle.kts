@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.io.File
 
 plugins {
     alias(libs.plugins.android.application)
@@ -16,9 +17,10 @@ plugins {
  *  3. The debug keystore (`~/.android/debug.keystore`), so `assembleRelease` always produces
  *     an installable APK even without any configuration.
  */
-val ciKeystore = System.getenv("LUMORA_KEYSTORE")?.let { java.io.File(it) }?.takeIf { it.exists() }
+val ciKeystore = System.getenv("LUMORA_KEYSTORE")?.let { File(it) }?.takeIf { it.exists() }
 val localKeystore = rootProject.file("keystore/lumora-release.jks").takeIf { it.exists() }
-val debugKeystore = java.io.File(System.getProperty("user.home"), ".android/debug.keystore").takeIf { it.exists() }
+val debugKeystore = File(System.getProperty("user.home").orEmpty(), ".android/debug.keystore")
+    .takeIf { it.exists() }
 
 val signingFile = ciKeystore ?: localKeystore ?: debugKeystore
 val usingDebugKey = signingFile != null && signingFile == debugKeystore && ciKeystore == null && localKeystore == null
