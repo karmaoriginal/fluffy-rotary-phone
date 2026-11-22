@@ -83,7 +83,10 @@
 
 ## 🖼️ Capturas
 
-> Placeholders — reemplázalos por capturas reales en `docs/assets/` (mismo nombre de archivo).
+> Mockups de la interfaz generados a partir del contenido real del catálogo (720 × 1560).
+> Para sustituirlos por capturas de un dispositivo, sobrescribe los archivos en `docs/assets/`
+> conservando el mismo nombre (`screenshot-store.png`, `screenshot-library.png`,
+> `screenshot-preview.png`, `screenshot-settings.png`).
 
 | Tienda | Biblioteca | Vista previa | Ajustes |
 |:---:|:---:|:---:|:---:|
