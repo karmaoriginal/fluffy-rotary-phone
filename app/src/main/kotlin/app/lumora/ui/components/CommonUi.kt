@@ -12,6 +12,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -119,7 +124,7 @@ fun SearchField(
         },
         leadingIcon = {
             Icon(
-                imageVector = androidx.compose.material.icons.Icons.Filled.Search,
+                imageVector = Icons.Filled.Search,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -127,7 +132,7 @@ fun SearchField(
         trailingIcon = {
             if (value.isNotEmpty()) {
                 Icon(
-                    imageVector = androidx.compose.material.icons.Icons.Filled.Clear,
+                    imageVector = Icons.Filled.Clear,
                     contentDescription = "Limpiar",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier
@@ -319,9 +324,9 @@ fun FavoriteButton(
     val interaction = remember { MutableInteractionSource() }
     Icon(
         imageVector = if (favorite) {
-            androidx.compose.material.icons.Icons.Filled.Favorite
+            Icons.Filled.Favorite
         } else {
-            androidx.compose.material.icons.Icons.Filled.FavoriteBorder
+            Icons.Filled.FavoriteBorder
         },
         contentDescription = if (favorite) "Quitar de favoritos" else "Añadir a favoritos",
         tint = if (favorite) MaterialTheme.colorScheme.tertiary else Color.White,

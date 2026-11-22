@@ -149,10 +149,7 @@ fun SharedTransitionScope.LibraryScreen(
                         },
                     )
 
-                    else -> AnimatedVisibility(
-                        visible = true,
-                        enter = fadeIn(tween(240)),
-                    ) {
+                    else -> Box(modifier = Modifier.fillMaxSize()) {
                         LazyVerticalStaggeredGrid(
                             columns = StaggeredGridCells.Fixed(2),
                             modifier = Modifier.fillMaxSize(),

@@ -20,6 +20,7 @@ class LumoraWorkerFactory(private val container: AppContainer) : WorkerFactory()
             library = container.library,
             enhancer = container.enhancer,
             fileStore = container.fileStore,
+            progressStore = container.enhancementProgress,
         )
 
         else -> null

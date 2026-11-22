@@ -10,6 +10,8 @@ import app.lumora.data.enhance.VideoEnhancer
 import app.lumora.data.library.LibraryRepository
 import app.lumora.data.storage.FileStore
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -22,6 +24,7 @@ class EnhanceWorker(
     private val library: LibraryRepository,
     private val enhancer: VideoEnhancer,
     private val fileStore: FileStore,
+    private val progressStore: EnhancementProgressStore,
 ) : CoroutineWorker(appContext, params) {
 
     override suspend fun doWork(): Result {
@@ -46,16 +49,21 @@ class EnhanceWorker(
             targetHeight = height,
         )
 
-        return try {
-            setProgress(workDataOf(KEY_WALLPAPER_ID to wallpaperId, KEY_PROGRESS to 0f))
-            val result = enhancer.enhance(request) { fraction ->
-                setProgress(
-                    workDataOf(
-                        KEY_WALLPAPER_ID to wallpaperId,
-                        KEY_PROGRESS to fraction.coerceIn(0f, 1f),
-                    ),
-                )
+        progressStore.start(wallpaperId)
+        val channel = Channel<Float>(Channel.CONFLATED)
+        val reporter = launch {
+            for (fraction in channel) {
+                runCatching {
+                    setProgress(
+                        workDataOf(KEY_WALLPAPER_ID to wallpaperId, KEY_PROGRESS to fraction),
+                    )
+                }
+                progressStore.progress(wallpaperId, fraction)
             }
+        }
+
+        return try {
+            val result = enhancer.enhance(request) { fraction -> channel.trySend(fraction) }
             val updated = library.replaceWithEnhanced(
                 id = wallpaperId,
                 enhancedFile = result.outputFile,
@@ -63,21 +71,28 @@ class EnhanceWorker(
                 height = result.height,
             )
             if (updated == null) {
+                progressStore.fail(wallpaperId, "No se pudo guardar el video mejorado")
                 Result.failure(workDataOf(KEY_ERROR to "No se pudo guardar el video mejorado"))
             } else {
+                progressStore.finish(wallpaperId)
                 Result.success(workDataOf(KEY_WALLPAPER_ID to wallpaperId))
             }
         } catch (cancellation: CancellationException) {
             fileStore.deleteQuietly(output)
+            progressStore.finish(wallpaperId)
             throw cancellation
         } catch (throwable: Throwable) {
             fileStore.deleteQuietly(output)
+            progressStore.fail(wallpaperId, throwable.message)
             Result.failure(
                 workDataOf(
                     KEY_WALLPAPER_ID to wallpaperId,
                     KEY_ERROR to (throwable.message ?: "Error desconocido"),
                 ),
             )
+        } finally {
+            channel.close()
+            reporter.cancel()
         }
     }
 

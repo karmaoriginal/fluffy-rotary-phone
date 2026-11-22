@@ -300,7 +300,7 @@ fun SharedTransitionScope.PreviewScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
-                    if (state.canEnhance && !state.isDownloaded.not()) {
+                    if (state.canEnhance) {
                         Badge(
                             text = "Mejorable",
                             icon = LumoraIcons.Sparkle,

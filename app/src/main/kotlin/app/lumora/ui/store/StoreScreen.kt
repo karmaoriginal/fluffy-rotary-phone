@@ -121,11 +121,7 @@ fun SharedTransitionScope.StoreScreen(
                         description = "Prueba con otra categoría, limpia la búsqueda o pulsa actualizar para traer el catálogo más reciente.",
                     )
 
-                    else -> AnimatedVisibility(
-                        visible = true,
-                        enter = fadeIn(tween(260)) + slideInVertically(tween(300)) { it / 12 },
-                        exit = fadeOut(tween(140)),
-                    ) {
+                    else -> Box(modifier = Modifier.fillMaxSize()) {
                         LazyVerticalStaggeredGrid(
                             columns = StaggeredGridCells.Fixed(2),
                             modifier = Modifier.fillMaxSize(),

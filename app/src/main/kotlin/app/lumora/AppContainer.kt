@@ -14,6 +14,7 @@ import app.lumora.data.store.DownloadCoordinator
 import app.lumora.data.store.StoreFavoritesRepository
 import app.lumora.data.wallpaper.LiveWallpaperConfig
 import app.lumora.data.wallpaper.WallpaperApplier
+import app.lumora.work.EnhancementProgressStore
 import app.lumora.work.EnhancementTracker
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -79,8 +80,10 @@ class AppContainer(context: Context) {
         WallpaperApplier(appContext, liveConfig)
     }
 
+    val enhancementProgress: EnhancementProgressStore by lazy { EnhancementProgressStore() }
+
     val enhancementTracker: EnhancementTracker by lazy {
-        EnhancementTracker(WorkManager.getInstance(appContext), fileStore)
+        EnhancementTracker(WorkManager.getInstance(appContext), enhancementProgress)
     }
 
     /** Frees resumable-download leftovers, enhancement scratch files and Coil's caches. */
