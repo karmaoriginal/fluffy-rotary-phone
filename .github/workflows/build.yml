@@ -71,6 +71,33 @@ jobs:
           set -o pipefail
           ./gradlew --no-daemon --stacktrace --warning-mode=summary :app:assembleRelease 2>&1 | tee build.log
 
+      # GitHub serves run logs / artifacts from hosts that some CI agents cannot reach.
+      # When the build fails we therefore publish a compact error digest straight into the
+      # commit thread through the REST API, so failures are always debuggable.
+      - name: Publish failure digest
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          {
+            echo "### Build failure digest"
+            echo ""
+            echo '```'
+            if [ -f build.log ]; then
+              grep -nE '^e: |FAILURE:|What went wrong|Caused by:|error:|Execution failed|> Task .* FAILED|Could not (resolve|download|find|create)|Unresolved reference|A problem occurred' build.log | tail -80 || true
+              echo "----- last 80 log lines -----"
+              tail -80 build.log
+            else
+              echo "build.log was not generated (failure before the Gradle invocation)."
+            fi
+            echo '```'
+          } > digest.md
+          head -c 60000 digest.md > digest-trimmed.md
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments" \
+            -F "body=@digest-trimmed.md" > /dev/null
+          echo "Failure digest published as a commit comment."
+
       - name: Show APK sizes
         if: always()
         run: |
