@@ -144,9 +144,16 @@ fun SharedTransitionScope.PreviewScreen(
                 state.remote != null -> state.remote!!.thumbUrl.ifBlank { state.remote!!.fullUrl }
                 else -> null
             }
-            if (state.isVideo && state.mediaPath != null) {
+            // Local videos play from the library file; store videos stream their short preview.
+            val videoUri: Uri? = if (state.isVideo) {
+                state.mediaPath?.let { Uri.fromFile(File(it)) }
+                    ?: state.remote?.previewUrl?.takeIf { it.isNotBlank() }?.let { Uri.parse(it) }
+            } else {
+                null
+            }
+            if (videoUri != null) {
                 VideoSurface(
-                    path = state.mediaPath!!,
+                    uri = videoUri,
                     muted = state.muted,
                     modifier = Modifier.fillMaxSize(),
                 )
@@ -622,7 +629,7 @@ private fun VideoActions(
 }
 
 @Composable
-private fun VideoSurface(path: String, muted: Boolean, modifier: Modifier = Modifier) {
+private fun VideoSurface(uri: Uri, muted: Boolean, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val player = remember { ExoPlayer.Builder(context).build() }
     DisposableEffect(Unit) {
@@ -630,11 +637,23 @@ private fun VideoSurface(path: String, muted: Boolean, modifier: Modifier = Modi
             player.release()
         }
     }
-    LaunchedEffect(path) {
-        player.setMediaItem(MediaItem.fromUri(Uri.fromFile(File(path))))
+    LaunchedEffect(uri) {
+        player.setMediaItem(MediaItem.fromUri(uri))
         player.repeatMode = Player.REPEAT_MODE_ONE
         player.prepare()
         player.play()
+    }
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            when (event) {
+                androidx.lifecycle.Lifecycle.Event.ON_STOP -> player.pause()
+                androidx.lifecycle.Lifecycle.Event.ON_START -> player.play()
+                else -> Unit
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
     LaunchedEffect(muted) {
         player.volume = if (muted) 0f else 1f

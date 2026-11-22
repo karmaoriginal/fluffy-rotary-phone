@@ -11,6 +11,10 @@ import coil.decode.GifDecoder
 import coil.decode.VideoFrameDecoder
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import java.io.File
 
 class LumoraApplication : Application(), ImageLoaderFactory, Configuration.Provider {
@@ -21,9 +25,12 @@ class LumoraApplication : Application(), ImageLoaderFactory, Configuration.Provi
     override fun onCreate() {
         super.onCreate()
         container = AppContainer(this)
-        // Trim the on-disk caches on a cold start (cheap, keeps storage bounded).
-        val limitMb = 256
-        runCatching { container.fileStore.trimCache(limitMb.toLong() * 1024L * 1024L) }
+        // Trim the on-disk caches after a cold start (off the main thread, never blocks the UI).
+        CoroutineScope(Dispatchers.IO).launch {
+            val limitMb = runCatching { container.settings.settings.first().cacheLimitMb }
+                .getOrDefault(256)
+            runCatching { container.fileStore.trimCache(limitMb.toLong() * 1024L * 1024L) }
+        }
     }
 
     override fun newImageLoader(): ImageLoader = ImageLoader.Builder(this)
