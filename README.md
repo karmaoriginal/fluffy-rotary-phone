@@ -11,8 +11,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/karmaoriginal/fluffy-rotary-phone/actions/workflows/build.yml">
-    <img src="https://github.com/karmaoriginal/fluffy-rotary-phone/actions/workflows/build.yml/badge.svg" alt="Build" />
+  <a href="https://github.com/karmaoriginal/lumora/actions/workflows/build.yml">
+    <img src="https://github.com/karmaoriginal/lumora/actions/workflows/build.yml/badge.svg" alt="Build" />
   </a>
   <img src="https://img.shields.io/badge/license-MIT-7B5CFF" alt="MIT" />
   <img src="https://img.shields.io/badge/contenido-CC0%201.0-25D0C0" alt="CC0" />
@@ -123,10 +123,10 @@ dependencias manual y explícita (`AppContainer`, `LumoraWorkerFactory`), sin fr
 ## ⬇️ Descargar el APK
 
 1. **Releases** (recomendado): entra en
-   [Releases](https://github.com/karmaoriginal/fluffy-rotary-phone/releases) y descarga el APK del
+   [Releases](https://github.com/karmaoriginal/lumora/releases) y descarga el APK del
    último tag `v*`.
 2. **GitHub Actions**: abre el run más reciente de
-   [Build APK](https://github.com/karmaoriginal/fluffy-rotary-phone/actions/workflows/build.yml),
+   [Build APK](https://github.com/karmaoriginal/lumora/actions/workflows/build.yml),
    baja hasta **Artifacts** y descarga `lumora-apks`.
 3. **Compílalo tú**: ver la sección siguiente.
 
@@ -139,8 +139,8 @@ móviles modernos, `arm64-v8a` es el más pequeño. El APK de CI está firmado c
 Requisitos: **JDK 17** y Android SDK (`compileSdk 35`). El repositorio incluye el Gradle wrapper.
 
 ```bash
-git clone https://github.com/karmaoriginal/fluffy-rotary-phone.git
-cd fluffy-rotary-phone
+git clone https://github.com/karmaoriginal/lumora.git
+cd lumora
 ./gradlew :app:assembleDebug      # APK de depuración
 ./gradlew :app:assembleRelease    # APK release (R8 + splits por ABI)
 ```
