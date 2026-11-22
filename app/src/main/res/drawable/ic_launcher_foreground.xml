@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer aura ring -->
+    <path
+        android:pathData="M32,54a22,22 0 1,0 44,0a22,22 0 1,0 -44,0"
+        android:strokeWidth="5"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:type="linear"
+                android:startX="30"
+                android:startY="32"
+                android:endX="78"
+                android:endY="78">
+                <item
+                    android:offset="0"
+                    android:color="#FF7B5CFF" />
+                <item
+                    android:offset="1"
+                    android:color="#FF25D0C0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Inner orb -->
+    <path android:pathData="M43,54a11,11 0 1,0 22,0a11,11 0 1,0 -22,0">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="50"
+                android:centerY="49"
+                android:gradientRadius="17">
+                <item
+                    android:offset="0"
+                    android:color="#FFFFFFFF" />
+                <item
+                    android:offset="0.6"
+                    android:color="#FFB9A6FF" />
+                <item
+                    android:offset="1"
+                    android:color="#FF6F4BFF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Spark -->
+    <path
+        android:pathData="M71,33a3,3 0 1,0 6,0a3,3 0 1,0 -6,0"
+        android:fillColor="#FFFFE9A8" />
+</vector>

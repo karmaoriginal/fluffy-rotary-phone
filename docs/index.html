@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lumora · catálogo de wallpapers</title>
+<meta name="description" content="Catálogo de wallpapers estáticos y animados de Lumora. Arte original bajo CC0." />
+<style>
+  :root {
+    --bg: #08080d; --surface: #12121a; --surface-2: #1a1a24;
+    --text: #eae8f2; --muted: #a29fb4;
+    --violet: #7b5cff; --teal: #25d0c0; --pink: #ff5c9d;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-image: radial-gradient(1000px 500px at 15% -10%, rgba(123,92,255,.22), transparent 70%),
+                      radial-gradient(800px 400px at 85% 0%, rgba(37,208,192,.14), transparent 70%);
+    min-height: 100vh;
+  }
+  header { max-width: 1100px; margin: 0 auto; padding: 56px 22px 18px; }
+  .logo { display: flex; align-items: center; gap: 14px; }
+  .orb {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, #b9a6ff 45%, #6f4bff 100%);
+    box-shadow: 0 0 0 6px rgba(123,92,255,.16), 0 0 40px rgba(123,92,255,.45);
+  }
+  h1 { font-size: 34px; margin: 0; letter-spacing: -.6px; }
+  h1 span { background: linear-gradient(90deg, var(--violet), var(--teal)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--muted); margin: 10px 0 0; max-width: 620px; }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .badge { font-size: 12px; padding: 5px 11px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid rgba(255,255,255,.06); }
+  main { max-width: 1100px; margin: 0 auto; padding: 10px 22px 80px; }
+  .tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 26px 0 8px; }
+  input[type=search], select {
+    background: var(--surface); color: var(--text); border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px; padding: 11px 14px; font: inherit; min-width: 220px; flex: 1;
+  }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 24px; }
+  .chip { cursor: pointer; font-size: 13px; padding: 7px 13px; border-radius: 999px; background: var(--surface); border: 1px solid rgba(255,255,255,.07); color: var(--muted); }
+  .chip.active { background: linear-gradient(90deg, var(--violet), var(--teal)); color: #0b0b12; font-weight: 600; border-color: transparent; }
+  .grid { columns: 4 220px; column-gap: 14px; }
+  @media (max-width: 700px) { .grid { columns: 2 150px; } }
+  .card { break-inside: avoid; margin: 0 0 14px; border-radius: 20px; overflow: hidden; background: var(--surface); position: relative; border: 1px solid rgba(255,255,255,.05); }
+  .card img { display: block; width: 100%; height: auto; }
+  .card .meta { padding: 10px 12px 12px; }
+  .card .t { font-weight: 600; font-size: 14px; }
+  .card .a { color: var(--muted); font-size: 12px; }
+  .tag { position: absolute; top: 9px; left: 9px; font-size: 11px; padding: 4px 8px; border-radius: 999px; background: rgba(0,0,0,.6); backdrop-filter: blur(6px); }
+  .empty { color: var(--muted); padding: 40px 0; }
+  footer { max-width: 1100px; margin: 0 auto; padding: 20px 22px 60px; color: var(--muted); font-size: 13px; }
+  a { color: var(--teal); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="orb" aria-hidden="true"></div>
+    <h1>Lumora <span>wallpapers</span></h1>
+  </div>
+  <p class="sub">Catálogo público de fondos de pantalla estáticos y animados. Todo el contenido es arte
+     original dedicado al dominio público (CC0 1.0): puedes usarlo, modificarlo y compartirlo.</p>
+  <div class="badges">
+    <span class="badge" id="count">— piezas</span>
+    <span class="badge">CC0 1.0</span>
+    <span class="badge">GitHub Pages + Releases</span>
+    <span class="badge"><a href="./catalog.json">catalog.json</a></span>
+  </div>
+</header>
+<main>
+  <div class="tools">
+    <input id="q" type="search" placeholder="Buscar por título, etiqueta o color…" />
+    <select id="sort">
+      <option value="recent">Más recientes</option>
+      <option value="popular">Más populares</option>
+      <option value="az">A–Z</option>
+    </select>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>Sin resultados para tu búsqueda.</p>
+</main>
+<footer>
+  Contenido original de Lumora Studio · <a href="./catalog.json">catalog.json</a> ·
+  Licencia del código: MIT · Licencia del contenido: CC0 1.0
+</footer>
+<script>
+const state = { items: [], query: "", category: null, sort: "recent" };
+const grid = document.getElementById("grid");
+const chips = document.getElementById("chips");
+
+function fmtBytes(n) {
+  if (!n) return "";
+  const mb = n / 1048576;
+  return mb >= 1 ? mb.toFixed(1) + " MB" : Math.round(n / 1024) + " KB";
+}
+
+function render() {
+  const q = state.query.trim().toLowerCase();
+  let items = state.items.slice();
+  if (state.category) {
+    items = items.filter(i => (i.categories || []).includes(state.category));
+  }
+  if (q) {
+    items = items.filter(i =>
+      (i.title + " " + (i.tags || []).join(" ") + " " + (i.categories || []).join(" ")).toLowerCase().includes(q));
+  }
+  if (state.sort === "popular") items.sort((a, b) => (b.downloads || 0) - (a.downloads || 0));
+  else if (state.sort === "az") items.sort((a, b) => a.title.localeCompare(b.title));
+  else items.sort((a, b) => String(b.addedAt).localeCompare(String(a.addedAt)));
+
+  grid.innerHTML = items.map(i => `
+    <article class="card">
+      <img loading="lazy" src="${i.thumbUrl}" alt="${i.title}" />
+      ${i.kind === "video" ? '<span class="tag">▶ animado</span>' : ""}
+      <div class="meta">
+        <div class="t">${i.title}</div>
+        <div class="a">${i.author} · ${i.width}×${i.height}${i.durationMs ? " · " + (i.durationMs / 1000) + "s" : ""} · ${fmtBytes(i.sizeBytes)}</div>
+      </div>
+    </article>`).join("");
+  document.getElementById("empty").hidden = items.length > 0;
+  document.getElementById("count").textContent = items.length + " piezas";
+}
+
+function renderChips(categories) {
+  chips.innerHTML = "";
+  const all = document.createElement("div");
+  all.className = "chip active";
+  all.textContent = "Todo";
+  all.onclick = () => { state.category = null; [...chips.children].forEach(c => c.classList.remove("active")); all.classList.add("active"); render(); };
+  chips.appendChild(all);
+  categories.forEach(c => {
+    const el = document.createElement("div");
+    el.className = "chip";
+    el.textContent = c.name;
+    el.onclick = () => { state.category = c.id; [...chips.children].forEach(x => x.classList.remove("active")); el.classList.add("active"); render(); };
+    chips.appendChild(el);
+  });
+}
+
+document.getElementById("q").addEventListener("input", e => { state.query = e.target.value; render(); });
+document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+
+fetch("./catalog.json", { cache: "no-store" })
+  .then(r => r.json())
+  .then(data => {
+    state.items = data.items || [];
+    renderChips(data.categories || []);
+    render();
+  })
+  .catch(() => {
+    grid.innerHTML = '<p class="empty">No se pudo cargar catalog.json.</p>';
+  });
+</script>
+</body>
+</html>

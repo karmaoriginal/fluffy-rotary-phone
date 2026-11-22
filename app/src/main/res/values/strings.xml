@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Lumora</string>
+    <string name="live_wallpaper_label">Lumora animado</string>
+    <string name="live_wallpaper_description">Video en bucle, sin cortes y con ahorro de batería.</string>
+
+    <!-- Navigation -->
+    <string name="nav_store">Tienda</string>
+    <string name="nav_library">Biblioteca</string>
+    <string name="nav_settings">Ajustes</string>
+</resources>

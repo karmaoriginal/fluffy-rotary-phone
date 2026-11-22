@@ -1,0 +1,160 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+      - 'arena/**'
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Assemble release APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle (with cache)
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+          validate-wrappers: false
+
+      - name: Prepare signing keystore
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          KEYSTORE_PATH="$RUNNER_TEMP/lumora-release.jks"
+          STORE_PASSWORD="${STORE_PASSWORD:-lumora-ci-store}"
+          KEY_ALIAS="${KEY_ALIAS:-lumora}"
+          KEY_PASSWORD="${KEY_PASSWORD:-$STORE_PASSWORD}"
+          if [ -n "${KEYSTORE_B64:-}" ]; then
+            echo "Using keystore from repository secrets."
+            echo "$KEYSTORE_B64" | base64 -d > "$KEYSTORE_PATH"
+          else
+            echo "No keystore secret found: generating an ephemeral release keystore."
+            keytool -genkeypair -v -keystore "$KEYSTORE_PATH" -alias "$KEY_ALIAS" \
+              -keyalg RSA -keysize 2048 -validity 10000 \
+              -storepass "$STORE_PASSWORD" -keypass "$KEY_PASSWORD" \
+              -dname "CN=Lumora, OU=Android, O=Lumora, L=Hermosillo, ST=Sonora, C=MX"
+          fi
+          {
+            echo "LUMORA_KEYSTORE=$KEYSTORE_PATH"
+            echo "LUMORA_KEYSTORE_PASSWORD=$STORE_PASSWORD"
+            echo "LUMORA_KEY_ALIAS=$KEY_ALIAS"
+            echo "LUMORA_KEY_PASSWORD=$KEY_PASSWORD"
+          } >> "$GITHUB_ENV"
+
+      - name: Assemble release APK
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon --stacktrace --warning-mode=summary :app:assembleRelease 2>&1 | tee build.log
+
+      # GitHub serves run logs / artifacts from hosts that some CI agents cannot reach.
+      # When the build fails we therefore publish a compact error digest straight into the
+      # commit thread through the REST API, so failures are always debuggable.
+      - name: Publish failure digest
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          {
+            echo "### Build failure digest"
+            echo ""
+            echo '```'
+            if [ -f build.log ]; then
+              grep -nE '^e: |FAILURE:|What went wrong|Caused by:|error:|Execution failed|> Task .* FAILED|Could not (resolve|download|find|create)|Unresolved reference|A problem occurred' build.log | tail -80 || true
+              echo "----- last 45 non-stack log lines -----"
+              grep -vE '^\s+at |^\t+at |^\.\.\. [0-9]+ more' build.log | tail -45
+            else
+              echo "build.log was not generated (failure before the Gradle invocation)."
+            fi
+            echo '```'
+          } > digest.md
+          head -c 60000 digest.md > digest-trimmed.md
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/comments" \
+            -F "body=@digest-trimmed.md" > /dev/null
+          echo "Failure digest published as a commit comment."
+
+      - name: Show APK sizes
+        if: always()
+        run: |
+          echo "### APK output" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          ls -lh app/build/outputs/apk/release/*.apk 2>/dev/null || echo "no APK produced"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          du -sh app/build/outputs/apk/release/*.apk 2>/dev/null || true
+
+      - name: Upload APK artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lumora-apks
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload R8 mapping
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mapping
+          path: app/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download APKs
+        uses: actions/download-artifact@v4
+        with:
+          name: lumora-apks
+          path: apks
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          ls -lh apks
+          gh release create "$GITHUB_REF_NAME" apks/*.apk \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Lumora $GITHUB_REF_NAME" \
+            --generate-notes
